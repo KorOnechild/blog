@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<script th:inline="javascript">
+    function writePost(){
+        let title = $('#title').val();
+        let contents = $('#contents').val();
+        let nickname = [[${user.nickname}]];
+        let data = {'title': title, 'contents': contents, 'nickname': nickname};
+        console.log(data);
+        $.ajax({
+            type: "POST",
+            url : "/post/create",
+            contentType: "application/json",
+            data : JSON.stringify(data),
+            success: function (response) {
+                console.log(response);
+                alert('메시지가 성공적으로 작성되었습니다.');
+                window.location.href="/home";
+            }
+        });
+    }
+
+</script>
+<body>
+<div class="background-header">
+
+</div>
+<div class="background-body">
+
+</div>
+<div class="wrap">
+    <div class="header">
+        <h1 onclick="location.href='/home'"><b>Blog</b></h1>
+        <h2>글을 작성해보세요</h2>
+    </div>
+    <div class="area-write">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="title" placeholder="제 목">
+        </div>
+        <textarea class="field" placeholder="공유하고 싶은 소식을 입력해주세요" name="contents" id="contents" cols="30"
+                  rows="10"></textarea>
+        <button type="button" class="btn btn-primary" onclick="writePost()"><b>글 쓰 기</b></button>
+        <button type="button" class="btn btn-primary" onclick="location.href='/home'"><b>돌아가기</b></button>
+    </div>
+</div>
+</body>
+</html>
